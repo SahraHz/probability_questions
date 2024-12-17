@@ -1,0 +1,80 @@
+
+---
+title: "Project 2"
+author: "Zahra Hosseinzadeh"
+output: html_document
+date: "2024-12-17"
+---
+
+## سوال اول: پرتاب سکه ۵ بار
+
+محاسبه احتمالات با استفاده از توزیع دوجمله‌ای:
+
+```{r}
+# سوال اول: توزیع دوجمله‌ای
+n <- 5   # تعداد پرتاب‌ها
+p <- 0.5 # احتمال مشاهده شیر
+
+# احتمال اینکه 4 بار شیر مشاهده شود
+prob_4_shir <- dbinom(4, size = n, prob = p)
+
+# احتمال اینکه حداقل 3 بار شیر مشاهده شود
+prob_min_3_shir <- sum(dbinom(3:5, size = n, prob = p))
+
+# احتمال اینکه هیچ شیری مشاهده نشود
+prob_0_shir <- dbinom(0, size = n, prob = p)
+
+# نمایش نتایج
+cat("احتمال مشاهده 4 بار شیر:", prob_4_shir, "\n")
+cat("احتمال مشاهده حداقل 3 بار شیر:", prob_min_3_shir, "\n")
+cat("احتمال مشاهده 0 بار شیر:", prob_0_shir, "\n")
+```
+
+## سوال دوم: پرتاب دو تاس
+
+محاسبه احتمال برای متغیر تصادفی \( Y = \min(X_1, X_2) \):
+
+```{r}
+# سوال دوم: محاسبه احتمال برای تاس
+possible_values <- 1:6  # مقادیر ممکن برای تاس
+all_outcomes <- expand.grid(X1 = possible_values, X2 = possible_values)
+
+# تعریف متغیر Y = Min(X1, X2)
+Y <- pmin(all_outcomes$X1, all_outcomes$X2)
+
+# احتمال Y کمتر از 2
+prob_Y_less_2 <- mean(Y < 2)
+
+# احتمال Y برابر 1
+prob_Y_equal_1 <- mean(Y == 1)
+
+# احتمال Y حداکثر 2
+prob_Y_max_2 <- mean(Y <= 2)
+
+# نمایش نتایج
+cat("احتمال اینکه Y کمتر از 2 باشد:", prob_Y_less_2, "\n")
+cat("احتمال اینکه Y برابر 1 باشد:", prob_Y_equal_1, "\n")
+cat("احتمال اینکه Y حداکثر 2 باشد:", prob_Y_max_2, "\n")
+```
+
+## سوال سوم: مهره‌های کیسه
+
+محاسبه احتمالات انتخاب مهره از کیسه بدون جای‌گذاری:
+
+```{r}
+# سوال سوم: مهره‌های کیسه
+white <- 5
+green <- 7
+blue <- 12
+total <- white + green + blue
+
+# احتمال انتخاب 2 مهره سفید بدون جای‌گذاری
+prob_2_white <- choose(white, 2) / choose(total, 2)
+
+# احتمال اینکه رنگ مهره‌ها متفاوت باشد
+prob_diff_colors <- 1 - (choose(white, 2) + choose(green, 2) + choose(blue, 2)) / choose(total, 2)
+
+# نمایش نتایج
+cat("احتمال اینکه هر دو مهره سفید باشند:", prob_2_white, "\n")
+cat("احتمال اینکه رنگ مهره‌ها متفاوت باشد:", prob_diff_colors, "\n")
+```
